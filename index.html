@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="เครื่องคิดเลขสำหรับผู้ขาย: เปิด Ads Boost ช่วง 10.10 แล้วกำไรหรือขาดทุนเท่าไร">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>10.10 Ads Boost คุ้มไหม</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<style>
+/* layout: orange masthead, then form (left) beside a sticky verdict panel (right);
+   full-width analysis and variable guide below; phones get a fixed verdict bar */
+:root{
+  --bg:#FBF2EE; --surface:#FFFFFF; --sunk:#FDF7F4; --ink:#2A1812; --muted:#7B635A; --line:#F0D9CF;
+  --accent:#EE4D2D; --accent-deep:#C9391B; --accent-soft:#FFE6DD;
+  --band:#D63C19; --band-fg:#FFFFFF; --band-sub:#FFE3DA; --band-line:rgba(255,255,255,.10);
+  --good:#13784A; --good-soft:#DDF3E7; --warn:#8A5A08; --warn-soft:#FCEFCF; --bad:#A1123A; --bad-soft:#FADDE4;
+  --display:'Bai Jamjuree','IBM Plex Sans Thai','Sukhumvit Set','Thonburi','Leelawadee UI',sans-serif;
+  --body:'IBM Plex Sans Thai','Sukhumvit Set','Thonburi','Leelawadee UI','Noto Sans Thai',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1B120F; --surface:#271A16; --sunk:#201512; --ink:#F8EBE5; --muted:#C2A99E; --line:#432B22;
+    --accent:#FF6B47; --accent-deep:#FF9274; --accent-soft:#4B2317;
+    --band:#C93A19; --band-fg:#FFFFFF; --band-sub:#FFD9CD;
+    --good:#56C994; --good-soft:#143525; --warn:#E8B755; --warn-soft:#3D2E0E; --bad:#FF8AA0; --bad-soft:#47151F;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1B120F; --surface:#271A16; --sunk:#201512; --ink:#F8EBE5; --muted:#C2A99E; --line:#432B22;
+  --accent:#FF6B47; --accent-deep:#FF9274; --accent-soft:#4B2317;
+  --band:#C93A19; --band-fg:#FFFFFF; --band-sub:#FFD9CD;
+  --good:#56C994; --good-soft:#143525; --warn:#E8B755; --warn-soft:#3D2E0E; --bad:#FF8AA0; --bad-soft:#47151F;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7}
+h1,h2,h3{font-family:var(--display);line-height:1.3;margin:0;text-wrap:balance}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+
+.band{background-color:var(--band);color:var(--band-fg);padding-block:28px 32px;padding-inline:20px;
+  background-image:linear-gradient(var(--band-line) 1px,transparent 1px),linear-gradient(90deg,var(--band-line) 1px,transparent 1px);
+  background-size:24px 24px;background-position:center top}
+.band-in{position:relative}
+.band-plot{display:block;position:absolute;right:0;bottom:-14px;width:424px;height:150px;color:var(--band-fg)}
+.band-plot text{font-family:var(--body);fill:currentColor;stroke:none}
+.band h1,.band p{max-width:calc(100% - 448px)}
+@media (max-width:1100px){
+  .band-plot{position:static;width:min(100%,340px);height:auto;margin-top:14px}
+  .band h1{max-width:none}
+  .band p{max-width:62ch}
+}
+.band-in,.wrap{max-width:1120px;margin-inline:auto}
+.band .tag{display:inline-block;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.06em;
+  border:1px solid var(--band-sub);border-radius:999px;padding:2px 12px;color:var(--band-sub)}
+.band-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.band .credit{font-family:var(--display);font-size:14px;font-weight:500;color:var(--band-sub);letter-spacing:.02em}
+.band .credit b{font-weight:700;color:var(--band-fg)}
+.band h1{font-size:clamp(26px,4.4vw,40px);font-weight:700;margin-top:12px}
+.band p{color:var(--band-sub);margin-top:8px}
+
+.wrap{max-width:1160px;padding-inline:20px;padding-block:24px 56px;display:flex;flex-direction:column;gap:32px}
+.top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:24px;align-items:start}
+.form{display:flex;flex-direction:column;gap:20px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel > h2{font-size:19px;font-weight:700}
+.panel > .sub{color:var(--muted);font-size:14px;margin-top:2px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field.wide{grid-column:1/-1}
+.field label,.lab{font-weight:600;font-size:15px}
+.opt{font-weight:400;color:var(--muted);font-size:13px}
+.hint{color:var(--muted);font-size:13px;line-height:1.55}
+.inp{display:flex;align-items:center;border:1px solid var(--line);border-radius:9px;background:var(--sunk);overflow:hidden}
+.inp:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.inp input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:17px;
+  padding:9px 12px;font-variant-numeric:tabular-nums;outline:none}
+.inp .unit{padding-inline:0 12px;color:var(--muted);font-size:14px;white-space:nowrap}
+.seg{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.seg label{flex:1 1 180px;cursor:pointer}
+.seg input{position:absolute;opacity:0}
+.seg span{display:block;text-align:center;border:1px solid var(--line);border-radius:9px;padding:8px 12px;
+  background:var(--sunk);font-weight:600;font-size:15px}
+.seg input:checked + span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
+.seg input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--accent);flex:none}
+.range{display:flex;align-items:center;gap:14px}
+.range input{flex:1;min-width:0;accent-color:var(--accent)}
+.range output{font-family:var(--display);font-weight:700;font-size:20px;min-width:5.5ch;text-align:right}
+.btn{font:inherit;font-weight:600;font-size:14px;color:var(--accent-deep);background:transparent;border:1px solid var(--accent);
+  border-radius:9px;padding:6px 14px;cursor:pointer;align-self:flex-start}
+.btn:hover{background:var(--accent-soft)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.example{font-size:13px;color:var(--muted);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+/* verdict */
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:16px;min-width:0}
+.verdict{border-radius:14px;padding:20px;background:var(--v-soft);border:1px solid var(--v)}
+.verdict[data-s="good"]{--v:var(--good);--v-soft:var(--good-soft)}
+.verdict[data-s="risk"]{--v:var(--warn);--v-soft:var(--warn-soft)}
+.verdict[data-s="bad"]{--v:var(--bad);--v-soft:var(--bad-soft)}
+.verdict[data-s="none"]{--v:var(--line);--v-soft:var(--surface)}
+.v-eyebrow{font-size:13px;color:var(--muted);font-weight:500}
+.v-head{display:flex;align-items:center;gap:12px;margin-top:4px}
+.v-icon{width:38px;height:38px;border-radius:50%;background:var(--v);color:var(--v-soft);display:grid;place-items:center;
+  font-family:var(--display);font-weight:700;font-size:22px;flex:none;line-height:1}
+.v-title{font-family:var(--display);font-weight:700;font-size:30px;color:var(--v);line-height:1.2}
+.verdict[data-s="none"] .v-title{color:var(--ink);font-size:20px}
+.v-why{margin-top:10px;font-size:15px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.kpi{min-width:0}
+.kpi dt{font-size:13px;color:var(--muted);line-height:1.4}
+.kpi dd{margin:2px 0 0;font-family:var(--display);font-weight:700;font-size:22px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+dl{margin:0}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+
+/* ROAS scale */
+.scale h3{font-size:16px}
+.track{position:relative;height:44px;margin-top:22px;border-radius:8px;background:var(--good-soft);border:1px solid var(--line)}
+.zone-loss{position:absolute;inset-block:0;left:0;border-radius:7px 0 0 7px;
+  background:repeating-linear-gradient(135deg,var(--bad-soft) 0 8px,var(--surface) 8px 12px)}
+.zone-t{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;white-space:nowrap}
+.zone-t.l{left:8px;color:var(--bad)} .zone-t.r{right:8px;color:var(--good)}
+.pin{position:absolute;top:50%;transform:translate(-50%,-50%)}
+.g{display:inline-block;flex:none}
+.g-be{width:3px;height:56px;background:var(--ink);border-radius:2px}
+.g-now{width:16px;height:16px;border-radius:50%;border:3px solid var(--ink);background:var(--surface)}
+.g-new{width:15px;height:15px;background:var(--accent);border:2px solid var(--surface);transform:rotate(45deg)}
+.g-act{width:14px;height:14px;background:var(--ink);border:2px solid var(--surface)}
+.pin .g-new{transform:translate(0,0) rotate(45deg)}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+.legend{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.legend li{display:flex;align-items:center;gap:10px}
+.legend .gbox{width:20px;display:grid;place-items:center;flex:none}
+.legend .g-be{height:18px}
+.legend b{margin-left:auto;font-family:var(--display);font-variant-numeric:tabular-nums}
+
+/* analysis */
+.sec > h2{font-size:24px;font-weight:700}
+.sec > .lead{color:var(--muted);max-width:68ch;margin-top:4px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:16px}
+.panel h3{font-size:17px;font-weight:700}
+.scroll{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+thead th{font-size:13px;color:var(--muted);font-weight:600}
+tr.total td{font-weight:700;border-bottom:0;font-family:var(--display);font-size:16px}
+tr.rule td{border-top:2px solid var(--ink)}
+td.cell{font-weight:600}
+td.cell.pos{background:var(--good-soft)} td.cell.neg{background:var(--bad-soft)}
+.note{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.55}
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:12px;max-width:74ch}
+.steps h4{margin:0;font-family:var(--display);font-size:16px}
+.steps p{font-size:15px}
+.advice{background:var(--accent-soft);border-radius:12px;padding:16px 18px;margin-top:16px}
+.advice h3{color:var(--accent-deep)}
+.advice ul{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+
+/* guide */
+.guide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.term{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+.term h3{font-size:16px;font-weight:700;color:var(--accent-deep)}
+.term dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;margin-top:8px;font-size:14px;line-height:1.6}
+.term dt{color:var(--muted);font-weight:600;white-space:nowrap}
+.term dd{margin:0}
+.formula{font-family:var(--display);font-weight:600;background:var(--sunk);border:1px solid var(--line);border-radius:9px;
+  padding:10px 14px;margin-top:8px;font-size:15px;overflow-x:auto;white-space:nowrap}
+.foot{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;max-width:80ch}
+
+.mbar{display:none}
+@media (max-width:900px){
+  .top{grid-template-columns:minmax(0,1fr)}
+  .side{position:static}
+  .grid2,.guide{grid-template-columns:minmax(0,1fr)}
+  .wrap{padding-block:20px 104px}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:5;align-items:center;gap:12px;justify-content:space-between;
+    background:var(--surface);border-top:1px solid var(--line);color:var(--ink);text-decoration:none;
+    padding:10px 20px calc(10px + env(safe-area-inset-bottom,0px))}
+  .mbar .m-v{font-family:var(--display);font-weight:700;font-size:18px}
+  .mbar[data-s="good"] .m-v{color:var(--good)} .mbar[data-s="risk"] .m-v{color:var(--warn)} .mbar[data-s="bad"] .m-v{color:var(--bad)}
+  .mbar .m-d{font-size:13px;color:var(--muted);text-align:right;line-height:1.4}
+}
+@media (max-width:520px){
+  .fields{grid-template-columns:minmax(0,1fr)}
+  .panel{padding:16px}
+  th,td{padding:7px 6px;font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="band-top">
+      <span class="tag">10.10 DOUBLE DAY · 09–11 ต.ค.</span>
+      <span class="credit">Designed by <b>Gle Atthachai</b></span>
+    </div>
+    <h1>เปิด Ads Boost ช่วง 10.10 แล้วคุ้มไหม</h1>
+    <p>กรอกตัวเลขของร้าน แล้วดูว่าเมื่อระบบลดเป้า ROAS และเพิ่มงบให้อัตโนมัติ ร้านจะยังมีกำไรหรือขาดทุนเท่าไร</p>
+    <svg class="band-plot" viewBox="0 0 480 170" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M30 150C86 80 171.4 45.3 286.2 28L30 150Z" fill="currentColor" fill-opacity=".16" stroke="none"/>
+      <path d="M30 158V8M24 16l6-8 6 8M20 150h452M464 144l8 6-8 6" stroke-width="1.5" opacity=".8"/>
+      <path d="M74 146v8M118 146v8M162 146v8M206 146v8M250 146v8M294 146v8M338 146v8M382 146v8M426 146v8M26 122h8M26 94h8M26 66h8M26 38h8" stroke-width="1.2" opacity=".65"/>
+      <path d="M286.2 28V150M30 28H286.2" stroke-width="1.2" stroke-dasharray="4 5" opacity=".75"/>
+      <path d="M30 150L328 8" stroke-width="1.5" opacity=".85"/>
+      <path d="M30 150C110 50 250 22 450 14" stroke-width="2.6"/>
+      <g fill="var(--band)" stroke-width="1.8"><circle cx="85.2" cy="98.2" r="4"/><circle cx="174.4" cy="54" r="4"/><circle cx="391.8" cy="17" r="4"/></g>
+      <circle cx="286.2" cy="28" r="5.5" fill="currentColor" stroke="none"/>
+      <text x="40" y="17" font-size="11" opacity=".85">ยอดขาย</text>
+      <text x="470" y="167" font-size="11" text-anchor="end" opacity=".85">ค่าแอด</text>
+      <text x="297" y="52" font-size="12" font-weight="600">จุดคุ้มทุน</text>
+      <text x="300" y="112" font-size="14" font-style="italic" opacity=".9">ROAS = ยอดขาย ÷ ค่าแอด</text>
+    </svg>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="top">
+    <form class="form" id="form" autocomplete="off">
+      <div class="example">
+        <span id="exNote">ตัวเลขที่เห็นเป็นค่าตัวอย่าง แก้เป็นของร้านคุณได้เลย</span>
+        <button type="button" class="btn" id="reset">กลับไปใช้ค่าตัวอย่าง</button>
+      </div>
+
+      <section class="panel">
+        <h2>กำไรต่อออเดอร์</h2>
+        <p class="sub">เงินที่เหลือจากการขาย ก่อนจ่ายค่าแอด</p>
+        <div class="seg" role="radiogroup" aria-label="วิธีกรอกกำไร">
+          <label><input type="radio" name="mode" id="modeDetail" value="detail" checked><span>คำนวณจากต้นทุน</span></label>
+          <label><input type="radio" name="mode" id="modeDirect" value="direct"><span>รู้อัตรากำไรอยู่แล้ว</span></label>
+        </div>
+        <div class="fields">
+          <div class="field wide">
+            <label for="price">ราคาขายจริงต่อออเดอร์ช่วงแคมเปญ</label>
+            <div class="inp"><input id="price" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">ราคาหลังลดราคาสินค้าแล้ว ยังไม่หักโค้ดร้าน ใช้ราคาช่วง 10.10 ไม่ใช่ราคาปกติ</span>
+          </div>
+          <div class="field" data-mode="detail">
+            <label for="cogs">ต้นทุนสินค้า</label>
+            <div class="inp"><input id="cogs" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">รวมค่าขนส่งขาเข้าและค่านำเข้า</span>
+          </div>
+          <div class="field" data-mode="detail">
+            <label for="fee">ค่าธรรมเนียมแพลตฟอร์มรวม</label>
+            <div class="inp"><input id="fee" type="number" inputmode="decimal" min="0" max="100" step="any"><span class="unit">% ของราคาขาย</span></div>
+            <span class="hint">ค่าคอมมิชชัน ค่าธุรกรรม และค่าโปรแกรมที่ร้านเข้าร่วม</span>
+          </div>
+          <div class="field" data-mode="detail">
+            <label for="voucher">ส่วนลดที่ร้านออกเอง</label>
+            <div class="inp"><input id="voucher" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">โค้ดร้าน ของแถม เฉลี่ยต่อออเดอร์</span>
+          </div>
+          <div class="field" data-mode="detail">
+            <label for="ship">ค่าส่งที่ร้านออก และค่าแพ็ก</label>
+            <div class="inp"><input id="ship" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">กล่อง กันกระแทก เทป ค่าส่งส่วนที่ร้านรับภาระ</span>
+          </div>
+          <div class="field wide" data-mode="detail">
+            <label for="ret">เผื่อของคืนหรือเสียหาย <span class="opt">ไม่บังคับ</span></label>
+            <div class="inp"><input id="ret" type="number" inputmode="decimal" min="0" max="100" step="any"><span class="unit">% ของราคาขาย</span></div>
+            <span class="hint">ถ้า 100 ออเดอร์มีของคืนที่ขายต่อไม่ได้ราว 2 ออเดอร์ ใส่ 2</span>
+          </div>
+          <div class="field wide" data-mode="direct" hidden>
+            <label for="margin">อัตรากำไรก่อนค่าแอด</label>
+            <div class="inp"><input id="margin" type="number" inputmode="decimal" step="any"><span class="unit">% ของราคาขาย</span></div>
+            <span class="hint">ต้องหักต้นทุนสินค้า ค่าธรรมเนียม ส่วนลด และค่าแพ็กแล้ว แต่ยังไม่หักค่าแอด</span>
+          </div>
+          <div class="field wide">
+            <label class="check" for="vat">
+              <input id="vat" type="checkbox">
+              <span><span class="lab">ค่าแอดถูกบวก VAT 7% และร้านขอคืนไม่ได้</span><br>
+              <span class="hint">ติ๊กถ้าร้านไม่ได้จดทะเบียน VAT และใบเสร็จเติมเงินค่าโฆษณามี VAT</span></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>การตั้งค่าแอดตอนนี้</h2>
+        <p class="sub">ดูได้จากหน้าโฆษณาของร้าน</p>
+        <div class="seg" role="radiogroup" aria-label="รูปแบบการประมูล">
+          <label><input type="radio" name="bid" id="bidCustom" value="custom" checked><span>ตั้งเป้า ROAS เอง (ลด 30%)</span></label>
+          <label><input type="radio" name="bid" id="bidAuto" value="auto"><span>ประมูลอัตโนมัติ (ลด 10%)</span></label>
+        </div>
+        <div class="fields">
+          <div class="field">
+            <label for="target" id="targetLab">เป้า ROAS ปัจจุบัน</label>
+            <div class="inp"><input id="target" type="number" inputmode="decimal" min="0" step="any"><span class="unit">เท่า</span></div>
+            <span class="hint" id="targetHint">ตัวเลขที่ตั้งไว้ในแคมเปญโฆษณา</span>
+          </div>
+          <div class="field" data-bid="custom">
+            <label for="rec">ROAS ที่ระบบแนะนำ <span class="opt">ไม่บังคับ</span></label>
+            <div class="inp"><input id="rec" type="number" inputmode="decimal" min="0" step="any"><span class="unit">เท่า</span></div>
+            <span class="hint">เป้าจะไม่ถูกลดต่ำกว่าค่านี้</span>
+          </div>
+          <div class="field wide" data-bid="custom">
+            <label for="actual">ROAS ที่ทำได้จริง 7 วันล่าสุด <span class="opt">ไม่บังคับ</span></label>
+            <div class="inp"><input id="actual" type="number" inputmode="decimal" min="0" step="any"><span class="unit">เท่า</span></div>
+            <span class="hint">เว้นว่างได้ ระบบจะถือว่าทำได้เท่าเป้าพอดี</span>
+          </div>
+          <div class="field">
+            <label for="budget">งบโฆษณาต่อวัน</label>
+            <div class="inp"><input id="budget" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">งบที่ตั้งไว้ก่อนแคมเปญ</span>
+          </div>
+          <div class="field">
+            <label for="used">ค่าแอดที่ใช้จริงต่อวัน <span class="opt">ไม่บังคับ</span></label>
+            <div class="inp"><input id="used" type="number" inputmode="decimal" min="0" step="any"><span class="unit">บาท</span></div>
+            <span class="hint">เว้นว่างถ้าปกติใช้งบหมดทุกวัน</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>ช่วงแคมเปญ</h2>
+        <p class="sub">สมมติฐานว่าระบบจะใช้งบไปมากแค่ไหน</p>
+        <div class="fields">
+          <div class="field wide">
+            <label for="n">งบถูกเพิ่มอัตโนมัติกี่ครั้งต่อวัน</label>
+            <div class="range"><input id="n" type="range" min="0" max="5" step="1"><output id="nOut" for="n"></output></div>
+            <span class="hint" id="nHint"></span>
+          </div>
+          <div class="field">
+            <label for="days">จำนวนวันที่เปิดใช้</label>
+            <div class="inp"><input id="days" type="number" inputmode="numeric" min="1" max="30" step="1"><span class="unit">วัน</span></div>
+            <span class="hint">แคมเปญนี้คือ 09–11 ต.ค. รวม 3 วัน</span>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <aside class="side" id="result" aria-live="polite">
+      <div class="verdict" id="verdict" data-s="none">
+        <div class="v-eyebrow">ผลวิเคราะห์จากตัวเลขที่กรอก</div>
+        <div class="v-head"><span class="v-icon" id="vIcon" aria-hidden="true"></span><span class="v-title" id="vTitle"></span></div>
+        <p class="v-why" id="vWhy"></p>
+        <dl class="kpis" id="kpis"></dl>
+      </div>
+      <div class="panel scale" id="scaleBox">
+        <h3>ROAS ของร้านอยู่ตรงไหนเทียบกับจุดคุ้มทุน</h3>
+        <div class="track" id="track"></div>
+        <div class="ends num"><span>0</span><span id="scaleMax"></span></div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <section class="sec" id="analysis">
+    <h2>วิเคราะห์ตัวเลขอย่างละเอียด</h2>
+    <p class="lead">ทุกตารางคำนวณจากช่องด้านบนและเปลี่ยนตามทันทีที่แก้ตัวเลข</p>
+    <div id="analysisBody"></div>
+  </section>
+
+  <section class="sec">
+    <h2>คำอธิบายตัวแปรที่ต้องกรอก</h2>
+    <p class="lead">แต่ละช่องหมายถึงอะไร หาตัวเลขได้จากที่ไหน และจุดที่มักกรอกผิด</p>
+    <div class="guide">
+      <article class="term"><h3>ราคาขายจริงต่อออเดอร์ช่วงแคมเปญ</h3><dl>
+        <dt>คืออะไร</dt><dd>ยอดขายเฉลี่ยของ 1 ออเดอร์ในช่วง 10.10 หลังลดราคาสินค้าแล้ว แต่ยังไม่หักโค้ดส่วนลดของร้าน</dd>
+        <dt>หาจากไหน</dt><dd>ราคาที่ตั้งไว้สำหรับแคมเปญ คูณจำนวนชิ้นเฉลี่ยต่อออเดอร์ หรือใช้ยอดขายหารจำนวนออเดอร์จากแคมเปญครั้งก่อน</dd>
+        <dt>ระวัง</dt><dd>ถ้าใช้ราคาปกติ กำไรจะดูสูงเกินจริง และผลจะบอกว่าคุ้มทั้งที่ไม่คุ้ม</dd></dl></article>
+      <article class="term"><h3>ต้นทุนสินค้า</h3><dl>
+        <dt>คืออะไร</dt><dd>เงินที่จ่ายเพื่อให้ได้สินค้ามาพร้อมขาย 1 ออเดอร์</dd>
+        <dt>รวมอะไร</dt><dd>ราคาทุน ค่าขนส่งจากผู้ผลิตมาถึงร้าน ค่านำเข้าและภาษีขาเข้าถ้ามี</dd>
+        <dt>ระวัง</dt><dd>ถ้า 1 ออเดอร์มีหลายชิ้น ต้องใส่ต้นทุนรวมของทุกชิ้นในออเดอร์</dd></dl></article>
+      <article class="term"><h3>ค่าธรรมเนียมแพลตฟอร์มรวม</h3><dl>
+        <dt>คืออะไร</dt><dd>ทุกอย่างที่แพลตฟอร์มหักจากยอดขาย คิดเป็น % ของราคาขาย</dd>
+        <dt>รวมอะไร</dt><dd>ค่าคอมมิชชัน ค่าธรรมเนียมธุรกรรม และค่าโปรแกรมที่ร้านสมัครไว้ เช่น ส่งฟรี หรือเงินคืนเป็นคอยน์</dd>
+        <dt>หาจากไหน</dt><dd>เปิดรายงานรายรับของออเดอร์ที่ส่งสำเร็จแล้ว นำยอดที่ถูกหักทั้งหมดหารด้วยราคาขาย อัตราต่างกันตามหมวดสินค้าและประเภทร้าน จึงควรใช้ตัวเลขจริงของร้าน</dd></dl></article>
+      <article class="term"><h3>ส่วนลดที่ร้านออกเอง</h3><dl>
+        <dt>คืออะไร</dt><dd>ส่วนลดที่ร้านเป็นคนจ่าย เฉลี่ยต่อออเดอร์</dd>
+        <dt>รวมอะไร</dt><dd>โค้ดส่วนลดร้าน ส่วนลดเมื่อซื้อครบ ต้นทุนของแถม</dd>
+        <dt>ระวัง</dt><dd>ไม่ต้องใส่โค้ดที่แพลตฟอร์มเป็นผู้ออก และถ้ามีลูกค้าใช้โค้ดเพียงบางส่วน ให้เฉลี่ย เช่น โค้ด 50 บาท ใช้ราวครึ่งหนึ่งของออเดอร์ ใส่ 25</dd></dl></article>
+      <article class="term"><h3>ค่าส่งที่ร้านออก และค่าแพ็ก</h3><dl>
+        <dt>คืออะไร</dt><dd>ค่าใช้จ่ายในการส่งของ 1 ออเดอร์ที่ร้านรับภาระเอง</dd>
+        <dt>รวมอะไร</dt><dd>กล่อง ซอง กันกระแทก เทป สติกเกอร์ และค่าส่งส่วนที่ลูกค้าไม่ได้จ่าย</dd>
+        <dt>ระวัง</dt><dd>ถ้าค่าส่งฟรีถูกคิดเป็น % ในค่าธรรมเนียมแล้ว ไม่ต้องใส่ซ้ำที่นี่</dd></dl></article>
+      <article class="term"><h3>เผื่อของคืนหรือเสียหาย</h3><dl>
+        <dt>คืออะไร</dt><dd>ส่วนของยอดขายที่คาดว่าจะเสียไปกับการคืนเงิน ของแตกหัก หรือของตีกลับที่ขายต่อไม่ได้</dd>
+        <dt>คิดอย่างไร</dt><dd>จำนวนออเดอร์ที่เสียหายหารจำนวนออเดอร์ทั้งหมด ถ้าไม่มีข้อมูลและสินค้าไม่แตกง่าย ใส่ 0 ได้</dd></dl></article>
+      <article class="term"><h3>อัตรากำไรก่อนค่าแอด</h3><dl>
+        <dt>คืออะไร</dt><dd>เงินที่เหลือต่อออเดอร์หลังหักทุกอย่างยกเว้นค่าแอด หารด้วยราคาขาย ใช้เมื่อเลือกกรอกแบบ "รู้อัตรากำไรอยู่แล้ว"</dd>
+        <dt>ระวัง</dt><dd>ไม่ใช่ % ที่บวกเพิ่มจากทุน ถ้าทุน 100 ขาย 115 อัตรากำไรคือ 13% และยังต้องหักค่าธรรมเนียมอีก</dd></dl></article>
+      <article class="term"><h3>VAT ของค่าแอด</h3><dl>
+        <dt>คืออะไร</dt><dd>ถ้าเติมเงินค่าโฆษณาแล้วถูกบวก VAT 7% และร้านไม่ได้จดทะเบียน VAT ร้านขอคืนภาษีนี้ไม่ได้ ค่าแอดจริงจึงแพงกว่าที่ระบบแสดง 7%</dd>
+        <dt>หาจากไหน</dt><dd>ดูใบเสร็จเติมเงินค่าโฆษณาว่ามีบรรทัด VAT หรือไม่</dd>
+        <dt>ผล</dt><dd>จุดคุ้มทุนจะสูงขึ้น 7% เช่น จาก 6.67 เป็น 7.13</dd></dl></article>
+      <article class="term"><h3>รูปแบบการประมูล</h3><dl>
+        <dt>คืออะไร</dt><dd>วิธีที่แคมเปญโฆษณาของร้านกำหนดราคาประมูล</dd>
+        <dt>ผล</dt><dd>ตามข้อความในป๊อปอัป เป้า ROAS ที่ตั้งเองจะถูกลด 30% ส่วนการประมูลอัตโนมัติจะลดช่วงเป้าลง 10%</dd>
+        <dt>ถ้าใช้ทั้งสองแบบ</dt><dd>คำนวณทีละแคมเปญ เพราะผลต่างกันมาก</dd></dl></article>
+      <article class="term"><h3>เป้า ROAS ปัจจุบัน</h3><dl>
+        <dt>คืออะไร</dt><dd>ROAS คือยอดขายจากแอดหารด้วยค่าแอด เป้า 6.5 หมายถึงขอให้ค่าแอด 1 บาทสร้างยอดขาย 6.5 บาท</dd>
+        <dt>ถ้าประมูลอัตโนมัติ</dt><dd>ไม่มีเป้าให้กรอก ให้ใส่ ROAS เฉลี่ยที่ทำได้จริงในรายงานโฆษณาแทน</dd>
+        <dt>ระวัง</dt><dd>เป้ายิ่งต่ำ ระบบยิ่งยอมจ่ายแพงต่อออเดอร์ ลดเป้า 30% เท่ากับค่าแอดต่อยอดขายเพิ่มราว 43%</dd></dl></article>
+      <article class="term"><h3>ROAS ที่ระบบแนะนำ</h3><dl>
+        <dt>คืออะไร</dt><dd>ค่าที่ระบบโฆษณาเสนอให้ตอนตั้งเป้า ป๊อปอัประบุว่าเป้าจะไม่ถูกลดต่ำกว่าค่านี้</dd>
+        <dt>ผล</dt><dd>ถ้าเป้าลด 30% แล้วต่ำกว่าค่าที่แนะนำ ระบบจะหยุดที่ค่าที่แนะนำ ถ้าเว้นว่าง หน้านี้จะคิดว่าลดเต็ม 30%</dd></dl></article>
+      <article class="term"><h3>ROAS ที่ทำได้จริง 7 วันล่าสุด</h3><dl>
+        <dt>คืออะไร</dt><dd>ผลจริงจากรายงานโฆษณา ซึ่งมักไม่เท่ากับเป้า</dd>
+        <dt>ใช้ทำอะไร</dt><dd>หน้านี้นำสัดส่วนระหว่างผลจริงกับเป้ามาคาดการณ์ ROAS หลังเปิด เช่น ตั้งเป้า 6.5 ทำได้จริง 7.8 (ดีกว่าเป้า 20%) เมื่อเป้าลดเหลือ 4.55 จะคาดว่าทำได้ 5.46</dd>
+        <dt>ระวัง</dt><dd>ถ้า 7 วันล่าสุดมีแคมเปญลดราคาหรือยอดคลิกน้อยมาก ตัวเลขจะไม่นิ่ง ให้ดูช่วงที่ยาวขึ้น</dd></dl></article>
+      <article class="term"><h3>งบต่อวัน และค่าแอดที่ใช้จริง</h3><dl>
+        <dt>งบต่อวัน</dt><dd>เพดานที่ตั้งไว้ในแคมเปญ ระบบใช้ค่านี้เป็นฐานในการเพิ่มทีละ 20%</dd>
+        <dt>ใช้จริง</dt><dd>ค่าแอดเฉลี่ยต่อวันจากรายงาน ถ้าปกติใช้ไม่หมดงบ ให้กรอกเพื่อให้กรณี "ไม่เปิด" ตรงกับความจริง</dd></dl></article>
+      <article class="term"><h3>จำนวนครั้งที่งบถูกเพิ่ม</h3><dl>
+        <dt>คืออะไร</dt><dd>ป๊อปอัประบุว่างบจะเพิ่ม 20% ตามการใช้งาน สูงสุด 5 ครั้งต่อวัน</dd>
+        <dt>คิดอย่างไร</dt><dd>หน้านี้คิดแบบทบต้นซึ่งเป็นกรณีที่ใช้เงินมากที่สุด 5 ครั้งเท่ากับ 2.49 เท่าของงบเดิม ถ้าระบบเพิ่มจากงบตั้งต้นทุกครั้งจะเป็น 2 เท่า</dd>
+        <dt>เลือกเท่าไร</dt><dd>เลือก 5 เพื่อดูกรณีที่ใช้เงินมากสุด แล้วลองลดลงเพื่อดูว่าผลเปลี่ยนแค่ไหน</dd></dl></article>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <h3>สูตรที่ใช้</h3>
+      <div class="formula">เงินเหลือต่อออเดอร์ = ราคาขาย − ต้นทุน − ค่าธรรมเนียม − ส่วนลดร้าน − ค่าส่งและแพ็ก − เผื่อของคืน</div>
+      <div class="formula">อัตรากำไรก่อนค่าแอด = เงินเหลือต่อออเดอร์ ÷ ราคาขาย</div>
+      <div class="formula">ROAS คุ้มทุน = (1 หรือ 1.07 ถ้ามี VAT) ÷ อัตรากำไรก่อนค่าแอด</div>
+      <div class="formula">เป้าหลังเปิด = เป้าปัจจุบัน × 0.7 (ตั้งเอง) หรือ × 0.9 (อัตโนมัติ) แต่ไม่ต่ำกว่า ROAS ที่แนะนำ</div>
+      <div class="formula">กำไรจากแอด = ค่าแอด × ROAS × อัตรากำไร − ค่าแอด (รวม VAT)</div>
+      <p class="note">ข้อจำกัด: ผลนี้เป็นการประมาณ ระบบจริงอาจใช้งบไม่ถึงเพดาน ROAS จริงช่วงแคมเปญอาจสูงหรือต่ำกว่าปกติ และค่าแอดที่เพิ่มขึ้นมักได้ผลตอบแทนต่ำกว่าค่าเฉลี่ย หน้านี้ไม่ได้นับผลทางอ้อม เช่น อันดับสินค้าที่ดีขึ้นหรือลูกค้าที่กลับมาซื้อซ้ำ</p>
+    </div>
+  </section>
+
+  <p class="foot">เครื่องมือนี้จัดทำขึ้นอย่างอิสระ ไม่ได้เป็นของหรือรับรองโดย Shopee เงื่อนไขของฟีเจอร์อิงจากข้อความในป๊อปอัปของแคมเปญ 10.10 (09/10–11/10) ควรตรวจรายละเอียดล่าสุดในหน้า "เรียนรู้เพิ่มเติม" ของระบบโฆษณาอีกครั้ง ตัวเลขทั้งหมดคำนวณในเบราว์เซอร์ของคุณและไม่ถูกส่งไปที่ใด</p>
+</main>
+
+<a class="mbar" id="mbar" href="#result" data-s="none"><span class="m-v" id="mV"></span><span class="m-d num" id="mD"></span></a>
+
+<script>
+(function(){
+  var EX = {mode:'detail',price:500,cogs:320,fee:13,voucher:30,ship:10,ret:0,margin:15,vat:false,
+            bid:'custom',target:6.5,rec:'',actual:'',budget:1000,used:'',n:5,days:3};
+  var KEY = 'adsboost1010.v1';
+  var NUMS = ['price','cogs','fee','voucher','ship','ret','margin','target','rec','actual','budget','used','days'];
+  var $ = function(id){return document.getElementById(id)};
+  var f0 = new Intl.NumberFormat('th-TH',{maximumFractionDigits:0});
+  var f1 = new Intl.NumberFormat('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1});
+  var f2 = new Intl.NumberFormat('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2});
+  function baht(x){return f0.format(Math.round(x))}
+  function signed(x){var r=Math.round(x); return (r>0?'+':r<0?'−':'')+f0.format(Math.abs(r))}
+  function cls(x){return Math.round(x)<0?'neg':Math.round(x)>0?'pos':''}
+  function word(x){return Math.round(x)<0?'ขาดทุน':'กำไร'}
+
+  function setForm(s){
+    NUMS.forEach(function(k){$(k).value = (s[k]===''||s[k]==null)?'':s[k]});
+    $('vat').checked = !!s.vat; $('n').value = s.n;
+    $(s.mode==='direct'?'modeDirect':'modeDetail').checked = true;
+    $(s.bid==='auto'?'bidAuto':'bidCustom').checked = true;
+  }
+  function num(id){var v=parseFloat($(id).value); return isFinite(v)?v:0}
+  function read(){
+    var s={}; NUMS.forEach(function(k){s[k]=num(k)});
+    s.vat=$('vat').checked; s.n=parseInt($('n').value,10)||0;
+    s.mode=$('modeDirect').checked?'direct':'detail'; s.bid=$('bidAuto').checked?'auto':'custom';
+    return s;
+  }
+  function raw(){
+    var s={}; NUMS.forEach(function(k){s[k]=$(k).value});
+    s.vat=$('vat').checked; s.n=$('n').value;
+    s.mode=$('modeDirect').checked?'direct':'detail'; s.bid=$('bidAuto').checked?'auto':'custom';
+    return s;
+  }
+
+  function calc(s){
+    var r={ok:true,miss:[]};
+    if(!(s.price>0)) r.miss.push('ราคาขาย');
+    if(!(s.target>0)) r.miss.push(s.bid==='auto'?'ROAS เฉลี่ย':'เป้า ROAS');
+    if(!(s.budget>0)) r.miss.push('งบต่อวัน');
+    if(r.miss.length){r.ok=false;return r}
+    var P=s.price;
+    if(s.mode==='detail'){
+      r.feeB=P*s.fee/100; r.retB=P*s.ret/100;
+      r.M=P-s.cogs-r.feeB-s.voucher-s.ship-r.retB;
+    } else { r.M=P*s.margin/100 }
+    r.m=r.M/P; r.v=s.vat?1.07:1;
+    r.be = r.m>0 ? r.v/r.m : Infinity;
+    r.T=s.target; r.k=(s.bid==='custom'&&s.actual>0)?s.actual/s.target:1;
+    r.cut = s.bid==='auto'?0.10:0.30;
+    r.Tn = r.T*(1-r.cut); r.floor=false;
+    if(s.bid==='custom' && s.rec>0){
+      var fl=Math.min(s.rec,r.T);
+      if(fl>r.Tn){r.Tn=fl;r.floor=true}
+    }
+    r.Anow=r.T*r.k; r.Anew=r.Tn*r.k;
+    r.days=Math.max(1,Math.round(s.days)||1);
+    r.spendNow=(s.used>0)?Math.min(s.used,s.budget):s.budget;
+    r.mult=Math.pow(1.2,s.n); r.spendNew=s.budget*r.mult;
+    r.profit=function(spend,roas){return spend*roas*r.m - spend*r.v};
+    r.pNow=r.profit(r.spendNow,r.Anow); r.pNew=r.profit(r.spendNew,r.Anew);
+    r.diff=(r.pNew-r.pNow)*r.days;
+    r.per100Now=100*(r.Anow*r.m/r.v-1); r.per100New=100*(r.Anew*r.m/r.v-1);
+    r.safeT = isFinite(r.be) ? r.be*1.1/r.k : Infinity;
+    if(r.m<=0) r.state='bad';
+    else if(r.Anew<r.be) r.state='bad';
+    else if(r.Anew<r.be*1.1 || r.pNew<r.pNow) r.state='risk';
+    else r.state='good';
+    return r;
+  }
+
+  function render(){
+    var s=read(), r=calc(s);
+    // field visibility
+    document.querySelectorAll('[data-mode]').forEach(function(e){e.hidden = e.dataset.mode!==s.mode});
+    document.querySelectorAll('[data-bid]').forEach(function(e){e.hidden = e.dataset.bid!==s.bid});
+    $('targetLab').textContent = s.bid==='auto'?'ROAS เฉลี่ยที่ทำได้ตอนนี้':'เป้า ROAS ปัจจุบัน';
+    $('targetHint').textContent = s.bid==='auto'?'ROAS จริงจากรายงานโฆษณา 7 วันล่าสุด':'ตัวเลขที่ตั้งไว้ในแคมเปญโฆษณา';
+    $('nOut').textContent = s.n+' ครั้ง';
+    $('nHint').textContent = s.budget>0
+      ? 'งบสูงสุดต่อวันจะเป็น '+baht(s.budget*Math.pow(1.2,s.n))+' บาท ('+f2.format(Math.pow(1.2,s.n))+' เท่าของงบเดิม)'
+      : 'ป๊อปอัประบุว่าเพิ่มครั้งละ 20% สูงสุด 5 ครั้งต่อวัน';
+
+    var V=$('verdict'), mb=$('mbar');
+    if(!r.ok){
+      V.dataset.s='none'; mb.dataset.s='none';
+      $('vIcon').hidden=true; $('vTitle').textContent='ยังคำนวณไม่ได้';
+      $('vWhy').textContent='กรอก'+r.miss.join(' ')+'ให้มากกว่า 0 ก่อน';
+      $('kpis').innerHTML=''; $('scaleBox').hidden=true; $('analysisBody').innerHTML='';
+      $('mV').textContent='ยังคำนวณไม่ได้'; $('mD').textContent='กรอก'+r.miss[0];
+      return;
+    }
+    var tNew=r.pNew*r.days, tNow=r.pNow*r.days;
+    var title={good:'คุ้ม เปิดได้',risk:'เสี่ยง',bad:'ไม่คุ้ม'}[r.state];
+    var icon={good:'✓',risk:'!',bad:'✕'}[r.state];
+    var why;
+    if(r.m<=0) why='ร้านขาดทุน '+baht(-r.M)+' บาทต่อออเดอร์ตั้งแต่ก่อนจ่ายค่าแอด ยิ่งขายได้มากจากแอดยิ่งขาดทุนมาก';
+    else if(r.state==='bad') why='หลังเปิด ROAS จะอยู่ราว '+f2.format(r.Anew)+' ซึ่งต่ำกว่าจุดคุ้มทุน '+f2.format(r.be)+' ค่าแอดทุก 100 บาทจะขาดทุน '+baht(-r.per100New)+' บาท';
+    else if(r.state==='risk' && r.pNew<r.pNow) why='ROAS หลังเปิด '+f2.format(r.Anew)+' ยังสูงกว่าจุดคุ้มทุน '+f2.format(r.be)+' แต่กำไรรวมจะน้อยกว่าไม่เปิด '+baht(-r.diff)+' บาท';
+    else if(r.state==='risk') why='ROAS หลังเปิด '+f2.format(r.Anew)+' สูงกว่าจุดคุ้มทุน '+f2.format(r.be)+' ไม่ถึง 10% ถ้าผลจริงแย่กว่าคาดเล็กน้อยจะขาดทุน';
+    else why='ROAS หลังเปิด '+f2.format(r.Anew)+' ยังสูงกว่าจุดคุ้มทุน '+f2.format(r.be)+' และกำไรรวมมากกว่าไม่เปิด '+baht(r.diff)+' บาท';
+    V.dataset.s=r.state; mb.dataset.s=r.state;
+    $('vIcon').hidden=false; $('vIcon').textContent=icon; $('vTitle').textContent=title; $('vWhy').textContent=why;
+    $('kpis').innerHTML=
+      kpi('ROAS คุ้มทุน', isFinite(r.be)?f2.format(r.be):'ไม่มี','')+
+      kpi('ROAS ที่คาดหลังเปิด', f2.format(r.Anew),'')+
+      kpi('ถ้าเปิด รวม '+r.days+' วัน', signed(tNew)+' บาท', cls(tNew))+
+      kpi('ถ้าไม่เปิด รวม '+r.days+' วัน', signed(tNow)+' บาท', cls(tNow));
+    $('mV').textContent=title;
+    $('mD').innerHTML='เปิด '+signed(tNew)+' บาท<br>ไม่เปิด '+signed(tNow)+' บาท';
+
+    renderScale(r,s); renderAnalysis(r,s);
+  }
+  function kpi(t,v,c){return '<div class="kpi"><dt>'+t+'</dt><dd class="'+c+'">'+v+'</dd></div>'}
+
+  function renderScale(r,s){
+    var box=$('scaleBox');
+    if(!isFinite(r.be)){box.hidden=true;return}
+    box.hidden=false;
+    var max=Math.max(r.be,r.T,r.Tn,r.Anew,r.Anow)*1.2;
+    var pct=function(x){return (x/max*100).toFixed(2)+'%'};
+    var bw=r.be/max*100;
+    var h='<div class="zone-loss" style="width:'+pct(r.be)+'"></div>';
+    if(bw>22) h+='<span class="zone-t l">ขาดทุน</span>';
+    if(bw<80) h+='<span class="zone-t r">กำไร</span>';
+    h+='<span class="pin" style="left:'+pct(r.be)+'"><span class="g g-be"></span></span>';
+    h+='<span class="pin" style="left:'+pct(r.T)+'"><span class="g g-now"></span></span>';
+    h+='<span class="pin" style="left:'+pct(r.Tn)+'"><span class="g g-new"></span></span>';
+    if(r.k!==1) h+='<span class="pin" style="left:'+pct(r.Anew)+'"><span class="g g-act"></span></span>';
+    $('track').innerHTML=h; $('scaleMax').textContent=f1.format(max);
+    var L=leg('g-be','จุดคุ้มทุน',r.be)+
+      leg('g-now',s.bid==='auto'?'ROAS ตอนนี้':'เป้าปัจจุบัน',r.T)+
+      leg('g-new',(s.bid==='auto'?'ROAS หลังเปิด':'เป้าหลังเปิด')+' (−'+Math.round((1-r.Tn/r.T)*100)+'%)',r.Tn);
+    if(r.k!==1) L+=leg('g-act','ที่คาดว่าทำได้จริงหลังเปิด',r.Anew);
+    $('legend').innerHTML=L;
+  }
+  function leg(g,t,v){return '<li><span class="gbox"><span class="g '+g+'"></span></span><span>'+t+'</span><b>'+f2.format(v)+'</b></li>'}
+
+  function row(a,b,c,k){return '<tr class="'+(k||'')+'"><td>'+a+'</td><td>'+b+'</td>'+(c!==undefined?'<td>'+c+'</td>':'')+'</tr>'}
+
+  function renderAnalysis(r,s){
+    var P=s.price, h='<div class="grid2">';
+    // 1 margin breakdown
+    h+='<div class="panel"><h3>เงินที่เหลือต่อออเดอร์ก่อนค่าแอด</h3><div class="scroll"><table><thead><tr><th>รายการ</th><th>บาท</th><th>% ของราคาขาย</th></tr></thead><tbody>';
+    var pc=function(x){return f1.format(x/P*100)+'%'};
+    h+=row('ราคาขายจริง',baht(P),'100.0%');
+    if(s.mode==='detail'){
+      h+=row('ต้นทุนสินค้า','−'+baht(s.cogs),pc(s.cogs));
+      h+=row('ค่าธรรมเนียมแพลตฟอร์ม','−'+baht(r.feeB),pc(r.feeB));
+      h+=row('ส่วนลดที่ร้านออกเอง','−'+baht(s.voucher),pc(s.voucher));
+      h+=row('ค่าส่งและค่าแพ็ก','−'+baht(s.ship),pc(s.ship));
+      if(s.ret>0) h+=row('เผื่อของคืนหรือเสียหาย','−'+baht(r.retB),pc(r.retB));
+    } else {
+      h+=row('ต้นทุนและค่าใช้จ่ายรวม','−'+baht(P-r.M),pc(P-r.M));
+    }
+    h+=row('เหลือก่อนค่าแอด','<span class="'+cls(r.M)+'">'+baht(r.M)+'</span>','<span class="'+cls(r.M)+'">'+f1.format(r.m*100)+'%</span>','total rule');
+    h+='</tbody></table></div>';
+    h+='<p class="note">'+(isFinite(r.be)
+      ? 'จุดคุ้มทุนคือ ROAS '+f2.format(r.be)+' หมายถึงค่าแอด 1 บาทต้องสร้างยอดขายอย่างน้อย '+f2.format(r.be)+' บาท ค่าแอดต่อออเดอร์ที่จ่ายได้สูงสุดคือ '+baht(r.M/r.v)+' บาท'+(s.vat?' (รวม VAT 7% ของค่าแอดแล้ว)':'')
+      : 'เงินที่เหลือไม่เป็นบวก จึงไม่มี ROAS ระดับใดที่ทำให้คุ้มทุน')+'</p></div>';
+
+    // 2 scenario
+    var oN=r.spendNow*r.Anow/P, oB=r.spendNew*r.Anew/P;
+    var sN=r.spendNow*r.Anow, sB=r.spendNew*r.Anew;
+    h+='<div class="panel"><h3>เทียบไม่เปิดกับเปิด Ads Boost</h3><div class="scroll"><table><thead><tr><th>ต่อวัน</th><th>ไม่เปิด</th><th>เปิด</th></tr></thead><tbody>';
+    h+=row(s.bid==='auto'?'ROAS':'เป้า ROAS',f2.format(r.T),f2.format(r.Tn));
+    if(r.k!==1) h+=row('ROAS ที่คาดว่าทำได้',f2.format(r.Anow),f2.format(r.Anew));
+    h+=row('ค่าแอด'+(s.vat?' (ก่อน VAT)':''),baht(r.spendNow),baht(r.spendNew));
+    h+=row('ยอดขายจากแอด',baht(sN),baht(sB));
+    h+=row('ออเดอร์จากแอด',f1.format(oN),f1.format(oB));
+    h+=row('เงินเหลือก่อนค่าแอด',baht(sN*r.m),baht(sB*r.m));
+    h+=row('กำไรหลังค่าแอด ต่อวัน','<span class="'+cls(r.pNow)+'">'+signed(r.pNow)+'</span>','<span class="'+cls(r.pNew)+'">'+signed(r.pNew)+'</span>','rule');
+    h+=row('รวม '+r.days+' วัน','<span class="'+cls(r.pNow*r.days)+'">'+signed(r.pNow*r.days)+'</span>','<span class="'+cls(r.pNew*r.days)+'">'+signed(r.pNew*r.days)+'</span>','total');
+    h+='</tbody></table></div>';
+    h+='<p class="note">กรณีเปิดคิดว่างบถูกเพิ่ม '+s.n+' ครั้งต่อวันและใช้หมดทุกวัน ส่วนต่างรวมคือ <b class="'+cls(r.diff)+'">'+signed(r.diff)+' บาท</b> เมื่อเทียบกับไม่เปิด</p></div>';
+    h+='</div>';
+
+    // 3 sensitivity
+    h+='<div class="panel" style="margin-top:20px"><h3>ถ้าผลจริงไม่ตรงกับที่คาด กำไรรวม '+r.days+' วันจะเป็นเท่าไร</h3><div class="scroll"><table><thead><tr><th>งบถูกเพิ่ม</th>'+
+       '<th>ROAS แย่กว่าคาด 20%<br>('+f2.format(r.Anew*0.8)+')</th><th>ตามคาด<br>('+f2.format(r.Anew)+')</th><th>ดีกว่าคาด 20%<br>('+f2.format(r.Anew*1.2)+')</th></tr></thead><tbody>';
+    [0,1,3,5].forEach(function(n){
+      var sp=s.budget*Math.pow(1.2,n);
+      h+='<tr><td>'+n+' ครั้ง ('+baht(sp)+' บาท/วัน)</td>';
+      [0.8,1,1.2].forEach(function(q){var p=r.profit(sp,r.Anew*q)*r.days; h+='<td class="cell '+cls(p)+'">'+signed(p)+'</td>'});
+      h+='</tr>';
+    });
+    h+='</tbody></table></div><p class="note">เครื่องหมาย + คือกำไร − คือขาดทุน หน่วยเป็นบาท ยิ่งงบถูกเพิ่มมาก ผลกำไรหรือขาดทุนยิ่งขยายตาม</p></div>';
+
+    // 4 written analysis
+    h+='<div class="panel" style="margin-top:20px"><h3>อ่านผลทีละขั้น</h3><div class="steps">';
+    h+=step('กำไรต่อออเดอร์','ขาย '+baht(P)+' บาท เหลือ '+baht(r.M)+' บาท หรือ '+f1.format(r.m*100)+'% ก่อนจ่ายค่าแอด เงินก้อนนี้คือเพดานของค่าแอดต่อออเดอร์');
+    if(isFinite(r.be)){
+      h+=step('สถานะตอนนี้','ROAS ปัจจุบัน '+f2.format(r.Anow)+' เทียบกับจุดคุ้มทุน '+f2.format(r.be)+' ค่าแอดทุก 100 บาท'+word(r.per100Now)+' '+baht(Math.abs(r.per100Now))+' บาท'+(r.Anow<r.be?' แปลว่าแอดขาดทุนอยู่แล้วก่อนเปิดฟีเจอร์':''));
+      h+=step('หลังเปิดฟีเจอร์',(s.bid==='auto'?'ROAS':'เป้า ROAS')+' จะลดจาก '+f2.format(r.T)+' เป็น '+f2.format(r.Tn)+
+        (r.floor?' เพราะระบบไม่ลดต่ำกว่า ROAS ที่แนะนำ':' (ลด '+Math.round(r.cut*100)+'%)')+
+        (r.k!==1?' จากผลจริงที่'+(r.k>1?'ดีกว่า':'แย่กว่า')+'เป้า '+f0.format(Math.abs(r.k-1)*100)+'% คาดว่าจะทำได้จริงราว '+f2.format(r.Anew):'')+
+        ' ค่าแอดต่อยอดขายจะขึ้นจาก '+f1.format(100/r.Anow)+'% เป็น '+f1.format(100/r.Anew)+'% ค่าแอดทุก 100 บาท'+word(r.per100New)+' '+baht(Math.abs(r.per100New))+' บาท');
+      h+=step('เงินที่ต้องเตรียม','งบต่อวันอาจขึ้นจาก '+baht(s.budget)+' เป็น '+baht(r.spendNew)+' บาท รวม '+r.days+' วันอาจใช้ค่าแอดถึง '+baht(r.spendNew*r.days*r.v)+' บาท'+(s.vat?' (รวม VAT)':'')+' และต้องมีสต็อกรองรับราว '+f0.format(Math.ceil(oB*r.days))+' ออเดอร์');
+      h+=step('ผลรวม','เปิดแล้ว'+word(r.pNew)+' '+baht(Math.abs(r.pNew*r.days))+' บาท ไม่เปิด'+word(r.pNow)+' '+baht(Math.abs(r.pNow*r.days))+' บาท การเปิดทำให้ผลรวม'+(r.diff>=0?'ดีขึ้น ':'แย่ลง ')+baht(Math.abs(r.diff))+' บาท');
+    }
+    h+='</div>';
+
+    // advice
+    h+='<div class="advice"><h3>สิ่งที่ควรทำ</h3><ul>';
+    if(r.m<=0){
+      h+='<li>หยุดเร่งแอดก่อน แล้วปรับราคาขาย ส่วนลด หรือหาต้นทุนที่ต่ำลงจนเงินเหลือต่อออเดอร์เป็นบวก</li>';
+    } else {
+      var st=f2.format(r.safeT);
+      if(r.state==='bad'){
+        h+='<li>กด "ไว้ทีหลัง" ไม่เปิดฟีเจอร์นี้กับแคมเปญโฆษณานี้</li>';
+        h+= (r.T<r.safeT)
+          ? '<li>'+(s.bid==='auto'?'ROAS ตอนนี้':'เป้าปัจจุบัน')+' '+f2.format(r.T)+' ต่ำกว่าระดับปลอดภัย ควร'+(s.bid==='auto'?'เปลี่ยนมาตั้งเป้าเองที่':'ขยับเป้าขึ้นเป็น')+'อย่างน้อย '+st+' (สูงกว่าจุดคุ้มทุน 10%)</li>'
+          : '<li>ถ้าอยากได้ยอดเพิ่ม ลดเป้าเองได้ไม่เกิน '+f0.format(Math.floor((1-r.safeT/r.T)*100))+'% คือไม่ต่ำกว่า '+st+'</li>';
+        h+='<li>เพิ่มยอดด้วยวิธีที่ไม่ลด ROAS เช่น เพิ่มงบเองเฉพาะวันที่ ROAS จริงยังสูงกว่า '+f2.format(r.be)+'</li>';
+        h+='<li>ถ้าตั้งใจยอมขาดทุนเพื่อดันอันดับสินค้า ให้กำหนดเพดานขาดทุนไว้ก่อน กรณีนี้อาจถึง '+baht(-r.pNew*r.days)+' บาทใน '+r.days+' วัน</li>';
+      } else if(r.state==='risk'){
+        h+='<li>ถ้าจะเปิด ให้ดู ROAS จริงวันละ 2–3 รอบ และปิดทันทีเมื่อต่ำกว่า '+f2.format(r.be)+'</li>';
+        if(r.T>r.safeT) h+='<li>ทางที่ปลอดภัยกว่าคือลดเป้าเองไม่เกิน '+f0.format(Math.floor((1-r.safeT/r.T)*100))+'% คือไม่ต่ำกว่า '+st+'</li>';
+        h+='<li>ตั้งเพดานงบสูงสุดที่รับไหวไว้เอง แทนการปล่อยให้เพิ่มครบ 5 ครั้ง</li>';
+      } else {
+        h+='<li>เปิดได้ โดยเฉพาะกับสินค้าที่รีวิวดีและมีสต็อกพอสำหรับราว '+f0.format(Math.ceil(oB*r.days))+' ออเดอร์</li>';
+        h+='<li>ดู ROAS จริงวันละ 2–3 รอบ ถ้าต่ำกว่า '+f2.format(r.be)+' ให้ปิด</li>';
+        h+='<li>ลองดูตารางด้านบนในช่อง "แย่กว่าคาด 20%" ถ้ายังเป็นบวก แปลว่ามีระยะปลอดภัยเพียงพอ</li>';
+      }
+      h+='<li>หลังจบแคมเปญ ตรวจว่าเป้า ROAS และงบกลับเป็นค่าเดิม</li>';
+    }
+    h+='</ul></div></div>';
+    $('analysisBody').innerHTML=h;
+  }
+  function step(t,p){return '<div><h4>'+t+'</h4><p>'+p+'</p></div>'}
+
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(raw()))}catch(e){}}
+  function isExample(){var a=raw(); return Object.keys(EX).every(function(k){return String(a[k])===String(EX[k])})}
+  function tick(){render(); $('exNote').textContent = isExample()?'ตัวเลขที่เห็นเป็นค่าตัวอย่าง แก้เป็นของร้านคุณได้เลย':'กำลังใช้ตัวเลขที่คุณกรอก บันทึกไว้ในเบราว์เซอร์นี้เท่านั้น'}
+
+  var init=EX;
+  try{var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&typeof sv==='object') init=Object.assign({},EX,sv)}catch(e){}
+  setForm(init); tick();
+  $('form').addEventListener('input',function(){tick();save()});
+  $('form').addEventListener('submit',function(e){e.preventDefault()});
+  $('reset').addEventListener('click',function(){setForm(EX);tick();try{localStorage.removeItem(KEY)}catch(e){}});
+  window.__calc=calc;
+})();
+</script>
+
+</body>
+</html>
